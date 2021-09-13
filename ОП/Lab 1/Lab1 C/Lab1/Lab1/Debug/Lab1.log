@@ -1,0 +1,5 @@
+﻿  Lab1.cpp
+D:\Projects\ОП\Lab 1\Lab1 C\Lab1\Lab1\Lab1.cpp(10,26): warning C4305: инициализация: усечение из "double" в "float"
+D:\Projects\ОП\Lab 1\Lab1 C\Lab1\Lab1\Lab1.cpp(20,12): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "1" имеет тип "double"
+D:\Projects\ОП\Lab 1\Lab1 C\Lab1\Lab1\Lab1.cpp(21,12): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "1" имеет тип "double"
+  Lab1.vcxproj -> D:\Projects\ОП\Lab 1\Lab1 C\Lab1\Debug\Lab1.exe

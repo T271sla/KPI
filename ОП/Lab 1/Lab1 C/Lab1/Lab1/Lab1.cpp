@@ -9,18 +9,19 @@ int main()
     double V1, V2;
     const float PI = 3.14;
 
-    #Введення даних
-    printf("Enter radius(R):");
-    scanf_s("%d", &R);
-    printf("Enter height(H):");
-    scanf_s("%d", &H);
-
-    #Розрахунок
+    //Введення даних
+    cout << "Enter the height: ";
+    cin >> H;
+    cout << "Enter the radius: ";
+    cin >> R;
+    
+    //Розрахунок
     V1 = R * R * H * PI;
     V2 = V1 / 3;
-
-    #Виведення даних
-    printf("Volume of the cylinder:%d\n", V1);
-    printf("Volume of the cone:%d\n", V2);
+    
+    //Виведення даних
+    cout << "Volume of the cilinder: " << V1 << "\n";
+    cout << "Volume of the con: " << V2 << "\n";
     system("pause");
+    return 0;
 }

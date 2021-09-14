@@ -20,8 +20,8 @@ int main()
     V2 = V1 / 3;
     
     //Виведення даних
-    cout << "Volume of the cilinder: " << V1 << "\n";
-    cout << "Volume of the con: " << V2 << "\n";
+    cout << "Volume of the cilinder: " << V1 << endl;
+    cout << "Volume of the con: " << V2 << endl;
     system("pause");
     return 0;
 }

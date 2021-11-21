@@ -5,7 +5,6 @@ using namespace std;
 int func(int n)
 {
 	do {
-		int res;
 		n /= 10;
 	} while (n > 10);
 

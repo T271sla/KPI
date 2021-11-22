@@ -1,14 +1,10 @@
 def func(n):
     if n >=10:
         while n >= 10:
-            k = n
             n /= 10
-        mod = (k % 10) / 10
-        func_res = n - mod
-        return func_res
+        return int (n)
     else:
-        func_res=n
-        return func_res
+        return int (n)
         
 print ("Enter a, b, c ∈ [1; +inf)")
 a = int(input())

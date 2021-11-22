@@ -12,8 +12,8 @@ b = int(input())
 c = int(input())
 
 if a >= 1 and b >= 1 and c >= 1:
-    res = func(a) + func(b) + func(c)
-    print ("Sum of first digits of entered numbers is:", res)
+    sum = func(a) + func(b) + func(c)
+    print ("Sum of first digits of entered numbers is:", sum)
 else:
     print ("One number (or more) doesn't belong to the required range. Try again.")
 

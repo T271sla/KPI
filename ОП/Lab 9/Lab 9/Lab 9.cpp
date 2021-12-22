@@ -9,9 +9,9 @@ int main()
 	cout << "Enter string:" << endl;
 	gets_s(str);
 	cout << "\nList of words:\n";
-	int IdSNum = func(str);
+	int res = func(str);
 	cout << "\nNumber of words: ";
-	cout << IdSNum << endl;
+	cout << res << endl;
 
 }
 

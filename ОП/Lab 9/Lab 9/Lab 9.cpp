@@ -33,6 +33,9 @@ int func(char str[])
 				}
 				cout << "\n";
 				count++;
+				if (FirstChar == ' ') {
+					count--;
+				}
 
 			}
 			FirstChar = str[i + 1];
@@ -47,9 +50,6 @@ int func(char str[])
 				}
 				cout << "\n";
 				count++;
-				if (FirstChar == ' ') {
-					count--;
-				}
 
 			}
 

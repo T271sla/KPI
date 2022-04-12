@@ -1,4 +1,4 @@
-﻿#include "Header.h"
+#include "Header.h"
 
 void alph_sorting(string even_str, string path_4, string path_2)
 {
@@ -74,24 +74,20 @@ void change(string* S, int size)
         }
 }
 
-string create_array(string S, int size)
+string create_array(string S, int& sz)
 {
-    int i = 0;
-    string buf;
-    const char* temp = (S.c_str());
+    string word;
 
-    while (i != size) {
-        while (*temp != '\n') {	
-            if (i == size - 1)
-            {
-                buf = buf + *temp;
-            }
-            *temp++;
+    for (int i = sz; i < S.length(); i++)
+    {
+        if (S[i] == '\n')
+        {
+            sz = i + 1;
+            return word;
+            break;
         }
-        *temp++;
-        i++;
+        word = word + S[i];
     }
-    return buf;
 }
 
 int fill_files(string path_1, string path_2, string path_3, int rows)

@@ -102,8 +102,10 @@ int main()
 
     string* S = new string[size + 1];
 
+    int sz = 0;
+
     for (int i = 0; i < size; i++) {
-        S[i] = create_array(uneven_s, i + 1);
+        S[i] = create_array(uneven_s, sz);
     }
 
     cout << endl;

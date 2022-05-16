@@ -1,0 +1,8 @@
+﻿  Lab 2'5.cpp
+D:\Projects\Lab 2'5\Lab 2'5\Header.h(44,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\Projects\Lab 2'5\Lab 2'5\Header.h(73,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  Source.cpp
+D:\Projects\Lab 2'5\Lab 2'5\Header.h(44,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\Projects\Lab 2'5\Lab 2'5\Header.h(73,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  Создание кода...
+  Lab 2'5.vcxproj -> D:\Projects\Lab 2'5\x64\Debug\Lab 2'5.exe

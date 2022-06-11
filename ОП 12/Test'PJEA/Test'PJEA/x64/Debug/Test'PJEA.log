@@ -1,0 +1,9 @@
+﻿  Func.cpp
+  Natural.cpp
+  Polyphase.cpp
+  Source.cpp
+D:\Projects\Test'PJEA\Test'PJEA\Source.cpp(234,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Test'PJEA.cpp
+  Создание кода...
+D:\Projects\Test'PJEA\Test'PJEA\Test'PJEA.cpp(75): warning C4715: SoftwareMainProcedure: значение возвращается не при всех путях выполнения
+  Test'PJEA.vcxproj -> D:\Projects\Test'PJEA\x64\Debug\Test'PJEA.exe

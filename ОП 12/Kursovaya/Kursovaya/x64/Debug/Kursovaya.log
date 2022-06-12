@@ -1,0 +1,7 @@
+﻿  Multiway.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(282,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(297,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(143,9): warning C4101: i: неиспользованная локальная переменная
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(190,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(204,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Kursovaya.vcxproj -> D:\Projects\Kursovaya\x64\Debug\Kursovaya.exe

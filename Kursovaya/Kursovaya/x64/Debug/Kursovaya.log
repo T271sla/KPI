@@ -1,0 +1,33 @@
+﻿  Func.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+D:\Projects\Kursovaya\Kursovaya\Header.h(62,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(218,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(234,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(478,13): warning C4101: i: неиспользованная локальная переменная
+  Kursovaya.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+D:\Projects\Kursovaya\Kursovaya\Header.h(62,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(218,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(234,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(478,13): warning C4101: i: неиспользованная локальная переменная
+  Multiway.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+D:\Projects\Kursovaya\Kursovaya\Header.h(62,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(218,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(234,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(478,13): warning C4101: i: неиспользованная локальная переменная
+  Natural.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+D:\Projects\Kursovaya\Kursovaya\Header.h(62,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(218,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(234,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(478,13): warning C4101: i: неиспользованная локальная переменная
+  Polyphase.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(8,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+D:\Projects\Kursovaya\Kursovaya\Header.h(62,19): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(218,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(234,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(478,13): warning C4101: i: неиспользованная локальная переменная
+  Создание кода...
+D:\Projects\Kursovaya\Kursovaya\Kursovaya.cpp(133): warning C4715: SoftwareMainProcedure: значение возвращается не при всех путях выполнения
+  Kursovaya.vcxproj -> D:\Projects\Kursovaya\x64\Debug\Kursovaya.exe

@@ -1,0 +1,26 @@
+﻿  Func.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(51,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(66,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+  Kursovaya.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(51,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(66,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+  Multiway.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(51,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(66,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(69,9): warning C4101: i: неиспользованная локальная переменная
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(116,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Multiway.cpp(130,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Natural.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(51,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(66,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Natural.cpp(46,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Polyphase.cpp
+D:\Projects\Kursovaya\Kursovaya\Header.h(51,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Header.h(66,46): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Projects\Kursovaya\Kursovaya\Polyphase.cpp(38,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 255 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+D:\Projects\Kursovaya\Kursovaya\Kursovaya.cpp(77): warning C4715: SoftwareMainProcedure: значение возвращается не при всех путях выполнения
+  Создание кода завершено
+  Kursovaya.vcxproj -> D:\Projects\Kursovaya\x64\Release\Kursovaya.exe

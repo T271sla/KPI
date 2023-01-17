@@ -1,12 +1,16 @@
 #include "Header.h"
+#include "Ant.h"
+
+void printList(Ant Ant);
 
 void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double pheromoneSumGraph[200][200])
 {
 	int Alpha = 3;
 	int Beta = 2;
 	double Ro = 0.3;
-	int Lmin = GetLmin(graph);
-	List<Ant> Ants;
+	double Lmin = GetLmin(graph);
+	vector<Ant> Ants;
+	vector<Probability> Probabilities;
 	int UsedStartingPoints[45];
 
 	for (int i = 0; i < 45; i++)
@@ -17,42 +21,54 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 	for (int i = 0; i < 45; i++)
 	{
 		int StartingPoint = GenerateStartingPoint(UsedStartingPoints, i);
-		Ants.Push(Ant(StartingPoint));
+		Ants.push_back(Ant(StartingPoint));
 	}
 
 	int iteration = 0;
+	int count = 0;
 
-	while (iteration < 20)
+	while (iteration < 40)
 	{
-		for (int i = 0; i < 200; i++)
+		for (int i = 0; i < Ants.size(); i++)
 		{
-			Ants.GetAt(i).Reset();
+			Ants.at(i).Reset();
 		}
 
-		for (int i = 0; i < 45; i++)
+		for (int i = 0; i < Ants.size(); i++)
 		{
-			while (Ants.GetAt(i).UnvisitedVertices.Length() != 0)
+			while (Ants.at(i).UnvisitedVertices.size() != 0)
 			{
-				double* Probabilities = new double[Ants.GetAt(i).UnvisitedVertices.Length()];
-				int noPath = 0;
+				Probabilities.clear();
 
-				for (int j = 0; j < Ants.GetAt(i).UnvisitedVertices.Length(); j++)
+				double StepTwo = 0;
+
+				for (int p = 0; p < Ants.at(i).UnvisitedVertices.size(); p++)
 				{
-					if (graph[Ants.GetAt(i).Path.GetAt(Ants.GetAt(i).Path.Length() - 1)][Ants.GetAt(i).UnvisitedVertices.GetAt(i)] != 0)
+					StepTwo += MoveProbabilityStepOne(Ants.at(i).Path.at(Ants.at(i).Path.size() - 1), Ants.at(i).UnvisitedVertices.at(p), pheromoneGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)][Ants.at(i).UnvisitedVertices.at(p)], Alpha, Beta, graph);
+				}
+
+				for (int j = 0; j < Ants.at(i).UnvisitedVertices.size(); j++)
+				{
+					if (graph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)][Ants.at(i).UnvisitedVertices.at(j)] != 0)
 					{
-						Probabilities[i] = MoveProbability(Ants.GetAt(i).Path.GetAt(Ants.GetAt(i).Path.Length() - 1), Ants.GetAt(i).UnvisitedVertices.GetAt(j), pheromoneGraph[Ants.GetAt(i).Path.GetAt(Ants.GetAt(i).Path.Length() - 1)][Ants.GetAt(i).UnvisitedVertices.GetAt(j)], Alpha, Beta, graph, Ants.GetAt(i).UnvisitedVertices.Length());
+						Probability prob;
+						prob.chance = MoveProbability(Ants.at(i).Path.at(Ants.at(i).Path.size() - 1), Ants.at(i).UnvisitedVertices.at(j), pheromoneGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)][Ants.at(i).UnvisitedVertices.at(j)], Alpha, Beta, graph, StepTwo);
+						prob.vertix = Ants.at(i).UnvisitedVertices.at(j);
+						Probabilities.push_back(prob);
 					}
 					else
 					{
-						noPath++;
+						Probability prob;
+						prob.chance = -1;
+						prob.vertix = Ants.at(i).UnvisitedVertices.at(j);
+						Probabilities.push_back(prob);
 					}
 				}
 
-				Ants.GetAt(i).ChooseDestination(Probabilities, noPath);
+				Ants.at(i).ChooseDestination(Probabilities);
 
-				pheromoneSumGraph[Ants.GetAt(i).Path.GetAt(Ants.GetAt(i).Path.Length() - 2)][Ants.GetAt(i).Path.GetAt(Ants.GetAt(i).Path.Length() - 1)] += Lmin / Ants.GetAt(i).getL(graph);
-
-				delete[] Probabilities;
+				pheromoneSumGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 2)][Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)] += Lmin / Ants.at(i).getL(graph);
+				count++;
 			}
 		}
 
@@ -70,10 +86,13 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 			}
 		}
 
+
 		iteration++;
 	}
 
-	printList(Ants.GetAt(199));
+	printList(Ants.at(Ants.size() - 1));
+	cout << "L min: " << Lmin << endl;
+	cout << "Path L: " << Ants.at(Ants.size() - 1).getL(graph);
 }
 
 int GenerateStartingPoint(int UsedStartingPoints[45], int M)
@@ -100,32 +119,38 @@ bool CheckForStartingPoint(int UsedStartingPoints[45], int StartingPoint, int M)
 	return true;
 }
 
-double MoveProbability(int curVertix, int destination, int pheromone, int alpha, int beta, int graph[200][200], int UnvisitedVerticesCount)
+double MoveProbability(int curVertix, int destination, double pheromone, int alpha, int beta, int graph[200][200], double StepTwo)
 {
 	double StepOne = MoveProbabilityStepOne(curVertix, destination, pheromone, alpha, beta, graph);
-	double StepTwo = 0;
-
-	for (int i = 0; i < UnvisitedVerticesCount; i++)
-	{
-		StepTwo += MoveProbabilityStepOne(curVertix, i, pheromone, alpha, beta, graph);
-	}
 
 	double probability = StepOne / StepTwo;
 
 	return probability;
 }
 
-double MoveProbabilityStepOne(int curVertix, int destination, int pheromone, int alpha, int beta, int graph[200][200])
+double MoveProbabilityStepOne(int curVertix, int destination, double pheromone, int alpha, int beta, int graph[200][200])
 {
-	double StepOne = (pow(pheromone, alpha) * pow((1 / graph[curVertix][destination]), beta));
-	return StepOne;
+	if (graph[curVertix][destination] != 0)
+	{
+		double edge = graph[curVertix][destination];
+		double visibility = 1 / edge;
+		double StepOne = (pow(pheromone, alpha) * pow(visibility, beta));
+		return StepOne;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
-int GetLmin(int graph[200][200])
+double GetLmin(int graph[200][200])
 {
-	int Lmin = 0;
+	vector<int> Path;
+
+	double Lmin = 0;
 	int min = graph[0][1];
 	int newVertix = 1;
+	int oldVertix = 0;
 
 	for (int i = 0; i < 200; i++)
 	{
@@ -134,59 +159,74 @@ int GetLmin(int graph[200][200])
 			if ((graph[i][j] < min) && (graph[i][j] != 0))
 			{
 				min = graph[i][j];
+				oldVertix = i;
 				newVertix = j;
 			}
 		}
 	}
 
-	int visited[200];
+	Path.push_back(oldVertix);
+	Path.push_back(newVertix);
 
-	for (int i = 0; i < 200; i++)
+	while (Path.size() != 200)
 	{
-		visited[i] = 0;
+		Path.push_back(GetMin(graph, Path.back()));
 	}
 
-	visited[newVertix] = min;
-	int iteration = 1;
-	GetMin(graph, visited, newVertix, iteration);
-
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < Path.size() - 1; i++)
 	{
-		Lmin += visited[i];
+		Lmin += graph[Path.at(i)][Path.at(i + 1)];
 	}
-
-	printArray(visited);
 
 	return Lmin;
 }
 
-void GetMin(int graph[200][200], int visited[200], int Vertix, int& iteration)
+int GetMin(int graph[200][200], int currVertix)
 {
 	int min = 0;
-	int newVertix = 0;
+	int nextVertix = 0;
 
-	for (int j = 0; j < 200; j++)
+	for (int i = 0; i < 200; i++)
 	{
-		if ((min == 0) && (graph[Vertix][j] != 0))
+		if (graph[currVertix][i] != 0)
 		{
-			min = graph[Vertix][j];
-			newVertix = j;
-		}
-
-		if ((graph[Vertix][j] < min) && (graph[Vertix][j] != 0))
-		{
-			min = graph[Vertix][j];
-			newVertix = j;
+			min = graph[currVertix][i];
+			nextVertix = i;
+			break;
 		}
 	}
 
-	visited[newVertix] = min;
-	iteration++;
-
-	if (iteration < 200)
+	for (int i = 0; i < 200; i++)
 	{
-		GetMin(graph, visited, newVertix, iteration);
+		if ((graph[currVertix][i] != 0) && (graph[currVertix][i] < min))
+		{
+			min = graph[currVertix][i];
+			nextVertix = i;
+		}
 	}
 
-	return;
+	return nextVertix;
+}
+
+void printList(Ant Ant)
+{
+	cout << Ant.Path.size() << endl;
+	for (int i = 0; i < 200; i++)
+	{
+		cout << Ant.Path.at(i) << "->";
+	}
+	cout << Ant.Path.at(0);
+	cout << endl;
+	cout << endl;
+}
+
+void printArray(int arr[200])
+{
+	for (int i = 0; i < 200; i++)
+	{
+		cout << arr[i] << "->";
+	}
+
+	cout << endl;
+	cout << endl;
 }

@@ -1,8 +1,7 @@
 ﻿#include <iostream>
-#include <cmath>
+#include <ctime>
 #include "Header.h"
 using namespace std;
-
 
 int main()
 {
@@ -41,9 +40,17 @@ void BuildPheromoneGraph(double pheromoneGraph[200][200])
 {
     for (int i = 0; i < 200; i++)
     {
-        for (int j = i; j < 200; j++)
+        for (int j = 0; j < 200; j++)
         {
-            pheromoneGraph[i][j] = 0;
+            if (i == j)
+            {
+                pheromoneGraph[i][j] = 0;
+            }
+            else
+            {
+                pheromoneGraph[i][j] = rand() % 9 + 1;
+                pheromoneGraph[i][j] = pheromoneGraph[i][j] / 10;
+            }
         }
     }
 }
@@ -52,9 +59,9 @@ void BuildPheromoneSumGraph(double pheromoneSumGraph[200][200])
 {
     for (int i = 0; i < 200; i++)
     {
-        for (int j = i; j < 200; j++)
+        for (int j = 0; j < 200; j++)
         {
-            pheromoneSumGraph[i][j] = ((rand() % 3) + 1) / 10;
+            pheromoneSumGraph[i][j] = 0;
         }
     }
 }
@@ -68,9 +75,4 @@ void BuildVisibilityGraph(double visibilityGraph[200][200], int graph[200][200])
             visibilityGraph[i][j] = 1 / graph[i][j];
         }
     }
-}
-
-double RD(double min, double max)
-{
-    return (double)(rand()) / RAND_MAX * (max - min) + min;
 }

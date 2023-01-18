@@ -1,0 +1,5 @@
+﻿  ASD'2'Lab2.cpp
+D:\Projects\ASD'2'Lab2\ASD'2'Lab2\ASD'2'Lab2.cpp(18,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Projects\ASD'2'Lab2\ASD'2'Lab2\ASD'2'Lab2.cpp(118,23): warning C4244: аргумент: преобразование "__int64" в "int", возможна потеря данных
+D:\Projects\ASD'2'Lab2\ASD'2'Lab2\Queue.h(127): warning C4715: PriorityQueue<State>::pop: значение возвращается не при всех путях выполнения
+  ASD'2'Lab2.vcxproj -> D:\Projects\ASD'2'Lab2\x64\Debug\ASD'2'Lab2.exe

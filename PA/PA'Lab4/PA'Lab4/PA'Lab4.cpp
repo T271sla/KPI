@@ -5,7 +5,6 @@ using namespace std;
 
 int main()
 {
-    srand(time(NULL));
 
     int graph[200][200];
     double pheromoneGraph[200][200];
@@ -14,6 +13,26 @@ int main()
     BuildGraph(graph);
     BuildPheromoneGraph(pheromoneGraph);
     BuildPheromoneSumGraph(pheromoneSumGraph);
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            cout << graph[i][j] << '\t';
+        }
+        cout << endl;
+    }
+    
+    cout << endl;
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            cout << pheromoneGraph[i][j] << '\t';
+        }
+        cout << endl;
+    }
 
     TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph);
 }

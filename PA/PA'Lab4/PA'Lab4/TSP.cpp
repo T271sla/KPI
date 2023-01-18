@@ -3,6 +3,22 @@
 
 void printList(Ant Ant);
 
+bool CheckOrig(vector<int> Path)
+{
+	for (int i = 0; i < Path.size() - 1; i++)
+	{
+		for (int j = i + 1; j < Path.size() - 1; j++)
+		{
+			if (Path.at(i) == Path.at(j))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double pheromoneSumGraph[200][200])
 {
 	int Alpha = 3;
@@ -27,7 +43,7 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 	int iteration = 0;
 	int count = 0;
 
-	while (iteration < 40)
+	while (iteration < 1000)
 	{
 		for (int i = 0; i < Ants.size(); i++)
 		{
@@ -86,13 +102,52 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 			}
 		}
 
-
 		iteration++;
-	}
 
-	printList(Ants.at(Ants.size() - 1));
-	cout << "L min: " << Lmin << endl;
-	cout << "Path L: " << Ants.at(Ants.size() - 1).getL(graph);
+		/*if ((iteration + 1) % 20 == 0)
+		{
+			int minIdx = 0;
+			int min = Ants.at(0).getL(graph);
+
+			for (int i = 1; i < Ants.size(); i++)
+			{
+				if (Ants.at(i).getL(graph) < min)
+				{
+					min = Ants.at(i).getL(graph);
+					minIdx = i;
+				}
+			}
+			cout << "Path L: " << Ants.at(minIdx).getL(graph) << endl;
+		}*/
+
+		/*if ((iteration + 1) % 20 == 0)
+		{
+			int maxIdx = 0;
+			int max = Ants.at(0).getL(graph);
+
+			for (int i = 1; i < Ants.size(); i++)
+			{
+				if (Ants.at(i).getL(graph) > max)
+				{
+					max = Ants.at(i).getL(graph);
+					maxIdx = i;
+				}
+			}
+			cout << "Path L: " << Ants.at(maxIdx).getL(graph) << endl;
+		}*/
+
+		if (iteration % 20 == 0)
+		{
+			double SumL = 0;
+
+			for (int i = 1; i < Ants.size(); i++)
+			{
+				SumL += Ants.at(i).getL(graph);
+			}
+
+			cout << SumL/Ants.size() << endl;
+		}
+	}
 }
 
 int GenerateStartingPoint(int UsedStartingPoints[45], int M)
@@ -146,11 +201,19 @@ double MoveProbabilityStepOne(int curVertix, int destination, double pheromone, 
 double GetLmin(int graph[200][200])
 {
 	vector<int> Path;
+	int UnvisitedVertices[200];
+
+	for (int i = 0; i < 200; i++)
+	{
+		UnvisitedVertices[i] = -1;
+	}
 
 	double Lmin = 0;
 	int min = graph[0][1];
 	int newVertix = 1;
 	int oldVertix = 0;
+	UnvisitedVertices[oldVertix] = 1;
+	UnvisitedVertices[newVertix] = 1;
 
 	for (int i = 0; i < 200; i++)
 	{
@@ -159,19 +222,31 @@ double GetLmin(int graph[200][200])
 			if ((graph[i][j] < min) && (graph[i][j] != 0))
 			{
 				min = graph[i][j];
+				UnvisitedVertices[oldVertix] = -1;
+				UnvisitedVertices[newVertix] = -1;
 				oldVertix = i;
 				newVertix = j;
+				UnvisitedVertices[oldVertix] = 1;
+				UnvisitedVertices[newVertix] = 1;
 			}
 		}
 	}
+
+	int first = oldVertix;
 
 	Path.push_back(oldVertix);
 	Path.push_back(newVertix);
 
 	while (Path.size() != 200)
 	{
-		Path.push_back(GetMin(graph, Path.back()));
+		int next = GetMin(graph, UnvisitedVertices, Path.back());
+		UnvisitedVertices[next] = 1;
+		Path.push_back(next);
 	}
+
+	Path.push_back(first);
+
+	bool check = CheckOrig(Path);
 
 	for (int i = 0; i < Path.size() - 1; i++)
 	{
@@ -181,27 +256,30 @@ double GetLmin(int graph[200][200])
 	return Lmin;
 }
 
-int GetMin(int graph[200][200], int currVertix)
+int GetMin(int graph[200][200], int UnvisitedVertices[200], int currVertix)
 {
 	int min = 0;
 	int nextVertix = 0;
 
 	for (int i = 0; i < 200; i++)
 	{
-		if (graph[currVertix][i] != 0)
+		if ((graph[currVertix][i] != 0) && (UnvisitedVertices[i] == -1))
 		{
 			min = graph[currVertix][i];
 			nextVertix = i;
+			UnvisitedVertices[i] = 1;
 			break;
 		}
 	}
 
 	for (int i = 0; i < 200; i++)
 	{
-		if ((graph[currVertix][i] != 0) && (graph[currVertix][i] < min))
+		if ((graph[currVertix][i] != 0) && (graph[currVertix][i] < min) && (UnvisitedVertices[i] == -1))
 		{
 			min = graph[currVertix][i];
+			UnvisitedVertices[nextVertix] = -1;
 			nextVertix = i;
+			UnvisitedVertices[i] == 1;
 		}
 	}
 

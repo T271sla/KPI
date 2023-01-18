@@ -1,2 +1,3 @@
 ﻿  TSP.cpp
+D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(283,25): warning C4553: "==": результат выражения не используется; вы хотели использовать "="?
   PA'Lab4.vcxproj -> D:\Projects\PA'Lab4\x64\Debug\PA'Lab4.exe

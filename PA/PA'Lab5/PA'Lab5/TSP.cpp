@@ -19,13 +19,17 @@ bool CheckOrig(vector<int> Path)
 	return true;
 }
 
-void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300])
+void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300])
 {
 	int Alpha = 2;
 	int Beta = 3;
 	double Ro = 0.3;
 	double Lmin = GetLmin(graph);
 	int M = 45;
+	int FirstSP = 152;
+	int eliteGen = 0;
+
+	int count = 0;
 
 	/*
 	cout << "Enter Alpha: ";
@@ -35,7 +39,181 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 	cout << "Enter Ro: ";
 	cin >> Ro;
 	cout << "Enter Lmin(Suggested " << Lmin << "): ";
-	cin >> Lmin;*/
+	cin >> Lmin;
+	cout << "Enter number of Ants: ";
+	cin >> M;
+	cout << "Enter starting point for the first Ant: ";
+	cin >> FirstSP;
+	cout << "Will first Ant be elite? ";
+	cin >> eliteGen;*/
+
+	double min = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen);
+	int tempAlpha = 1;
+
+	while (true)
+	{
+		if (tempAlpha = 3)
+		{
+			tempAlpha += 1;
+		}
+		double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, tempAlpha, Beta, Ro, Lmin, M, FirstSP, eliteGen);
+		if (tempMin < min)
+		{
+			min = tempMin;
+			Alpha = tempAlpha;
+			tempAlpha++;
+		}
+		else
+		{
+			tempAlpha++;
+			count++;
+			if (count >= 2)
+			{
+				if (tempAlpha <= Alpha)
+				{
+					tempAlpha = Alpha + 1;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+
+	int tempBeta = 1;
+
+	while (true)
+	{
+		if (tempBeta = 3)
+		{
+			tempBeta += 1;
+		}
+		double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, tempBeta, Ro, Lmin, M, FirstSP, eliteGen);
+		if (tempMin < min)
+		{
+			min = tempMin;
+			Beta = tempBeta;
+			tempBeta++;
+		}
+		else
+		{
+			tempBeta++;
+			count++;
+			if (count >= 2)
+			{
+				if (tempBeta <= Beta)
+				{
+					tempBeta = Beta + 1;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+
+	double tempRo = 0.1;
+
+	while (true)
+	{
+		if (tempRo = 0.3)
+		{
+			tempRo += 0.1;
+		}
+		double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, tempRo, Lmin, M, FirstSP, eliteGen);
+		if (tempMin < min)
+		{
+			min = tempMin;
+			Ro = tempRo;
+			tempBeta++;
+		}
+		else
+		{
+			tempBeta++;
+			count++;
+			if (count >= 2)
+			{
+				if (tempRo <= Ro)
+				{
+					tempRo = Ro + 0.1;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (i == 0)
+		{
+			int tempL = 1000;
+			double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, tempL, M, FirstSP, eliteGen);
+			if (tempMin < min)
+			{
+				min = tempMin;
+				Lmin = tempL;
+			}
+		}
+		if (i == 1)
+		{
+			int tempL = 3000;
+			double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, tempL, M, FirstSP, eliteGen);
+			if (tempMin < min)
+			{
+				min = tempMin;
+				Lmin = tempL;
+			}
+		}
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (i == 0)
+		{
+			int tempM = 15;
+			double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, tempM, FirstSP, eliteGen);
+			if (tempMin < min)
+			{
+				min = tempMin;
+				M = tempM;
+			}
+		}
+		if (i == 1)
+		{
+			int tempM = 75;
+			double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, tempM, FirstSP, eliteGen);
+			if (tempMin < min)
+			{
+				min = tempMin;
+				M = tempM;
+			}
+		}
+	}
+
+	double tempMin = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, 1);
+
+	if (tempMin < min)
+	{
+		min = tempMin;
+	}
+
+	cout << min;
+}
+
+double TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300], int alpha, int beta, double ro, double LMin, int m, int FirstSp, int EliteGen)
+{
+	int Alpha = alpha;
+	int Beta = beta;
+	double Ro = ro;
+	double Lmin = LMin;
+	int M = m;
+	int FirstSP = FirstSp;
+	int eliteGen = EliteGen;
 
 	vector<Ant> Ants;
 	vector<Probability> Probabilities;
@@ -48,8 +226,16 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 
 	for (int i = 0; i < M; i++)
 	{
-		int StartingPoint = GenerateStartingPoint(UsedStartingPoints, i);
-		Ants.push_back(Ant(StartingPoint));
+		if (i == 0)
+		{
+			Ants.push_back(Ant(FirstSP, eliteGen));
+		}
+		else
+		{
+			int StartingPoint = GenerateStartingPoint(UsedStartingPoints, i);
+			int eliteGenerator = rand() % 2;
+			Ants.push_back(Ant(StartingPoint, eliteGenerator));
+		}
 	}
 
 	int iteration = 0;
@@ -95,8 +281,16 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 
 				Ants.at(i).ChooseDestination(Probabilities);
 
-				pheromoneSumGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 2)][Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)] += Lmin / Ants.at(i).getL(graph);
-				count++;
+				if (Ants.at(i).elite)
+				{
+					pheromoneSumGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 2)][Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)] += 2 * (Lmin / Ants.at(i).getL(graph));
+					count++;
+				}
+				else
+				{
+					pheromoneSumGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 2)][Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)] += Lmin / Ants.at(i).getL(graph);
+					count++;
+				}
 			}
 		}
 
@@ -129,6 +323,9 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 					minIdx = i;
 				}
 			}
+			cout << endl;
+			printList(Ants.at(minIdx));
+			cout << "L min: " << Lmin << endl;
 			cout << "Path L: " << Ants.at(minIdx).getL(graph) << endl;
 		}*/
 
@@ -145,10 +342,13 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 					maxIdx = i;
 				}
 			}
+			cout << endl;
+			printList(Ants.at(minIdx));
+			cout << "L min: " << Lmin << endl;
 			cout << "Path L: " << Ants.at(maxIdx).getL(graph) << endl;
 		}*/
 
-		if (iteration % 20 == 0)
+		/*if (iteration % 20 == 0)
 		{
 			double SumL = 0;
 
@@ -156,10 +356,28 @@ void TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double p
 			{
 				SumL += Ants.at(i).getL(graph);
 			}
+			cout << endl;
+			printList(Ants.at(minIdx));
+			cout << "L min: " << Lmin << endl;
+			cout << SumL/Ants.size() << endl;
+		}*/
 
-			cout << SumL / Ants.size() << endl;
-		}
+		/*if (iteration % 20 == 0)
+		{
+			cout << endl;
+			printList(Ants.at(0));
+			cout << "L min: " << Lmin << endl;
+			cout << "Path L: " << Ants.at(0).getL(graph) << endl;
+		}*/
 	}
+
+	double SumL = 0;
+
+	for (int i = 1; i < Ants.size(); i++)
+	{
+		SumL += Ants.at(i).getL(graph);
+	}
+	return SumL / Ants.size();
 }
 
 int GenerateStartingPoint(int UsedStartingPoints[], int M)

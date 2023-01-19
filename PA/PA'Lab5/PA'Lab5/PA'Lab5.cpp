@@ -35,7 +35,7 @@ int main()
         cout << endl;
     }*/
 
-    TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph);
+    TSPFindOptimal(graph, pheromoneGraph, pheromoneSumGraph);
 }
 
 void BuildGraph(int graph[300][300])

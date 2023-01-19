@@ -6,6 +6,7 @@ class Ant
 public:
 
     int StartingPoint;
+    bool elite = false;
     vector<int> Path;
     vector<int> UnvisitedVertices;
 
@@ -17,7 +18,7 @@ public:
         this->UnvisitedVertices.clear();
     }
 
-    Ant(int StartingPoint);
+    Ant(int StartingPoint, int eliteGenerator);
 
     void Reset();
 

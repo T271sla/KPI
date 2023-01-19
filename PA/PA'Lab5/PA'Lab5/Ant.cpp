@@ -1,15 +1,20 @@
 #include "Ant.h"
 
-Ant::Ant(int StartingPoint)
+Ant::Ant(int StartingPoint, int eliteGenerator)
 {
     this->StartingPoint = StartingPoint;
     this->Path.push_back(StartingPoint);
-    for (int i = 0; i < 300; i++)
+    for (int i = 0; i < 200; i++)
     {
         if (i != StartingPoint)
         {
             this->UnvisitedVertices.push_back(i);
         }
+    }
+
+    if (eliteGenerator == 1)
+    {
+        this->elite = true;
     }
 }
 

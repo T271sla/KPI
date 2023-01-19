@@ -1,5 +1,3 @@
-﻿  PA'Lab5.cpp
-  TSP.cpp
-D:\Projects\PA'Lab5\PA'Lab5\TSP.cpp(294,25): warning C4553: "==": результат выражения не используется; вы хотели использовать "="?
-  Создание кода...
+﻿  TSP.cpp
+D:\Projects\PA'Lab5\PA'Lab5\TSP.cpp(512,25): warning C4553: "==": результат выражения не используется; вы хотели использовать "="?
   PA'Lab5.vcxproj -> D:\Projects\PA'Lab5\x64\Debug\PA'Lab5.exe

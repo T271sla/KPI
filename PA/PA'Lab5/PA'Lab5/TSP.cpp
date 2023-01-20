@@ -22,7 +22,7 @@ bool CheckOrig(vector<int> Path)
 void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300])
 {
 	int Alpha = 2;
-	int Beta = 3;
+	int Beta = 2;
 	double Ro = 0.3;
 	double Lmin = GetLmin(graph);
 	int M = 45;
@@ -30,6 +30,7 @@ void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double
 	int eliteGen = 0;
 
 	int count = 0;
+	cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen) << endl;
 
 	/*
 	cout << "Enter Alpha: ";
@@ -41,14 +42,62 @@ void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double
 	cout << "Enter Lmin(Suggested " << Lmin << "): ";
 	cin >> Lmin;
 	cout << "Enter number of Ants: ";
-	cin >> M;
-	cout << "Enter starting point for the first Ant: ";
-	cin >> FirstSP;
-	cout << "Will first Ant be elite? ";
-	cin >> eliteGen;*/
+	cin >> M;*/
+	//cout << "Enter starting point for the first Ant: ";
+	//cin >> FirstSP;
+	//cout << "Will first Ant be elite? ";
+	//cin >> eliteGen;
 
-	double min = TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen);
-	int tempAlpha = 1;
+	for (int i = 0; i < 10; i++)
+	{
+		cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, i + 1, Beta, Ro, Lmin, M, FirstSP, eliteGen) << endl;
+		BuildPheromoneSumGraph(pheromoneSumGraph);
+	}
+
+	cout << endl;
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, i + 1, Ro, Lmin, M, FirstSP, eliteGen) << endl;
+		BuildPheromoneSumGraph(pheromoneSumGraph);
+	}
+
+	cout << endl;
+
+	double tempRo = 0;
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, tempRo, Lmin, M, FirstSP, eliteGen) << endl;
+		BuildPheromoneSumGraph(pheromoneSumGraph);
+		tempRo += 0.1;
+	}
+	cout << endl;
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (i == 5)
+		{
+			cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen) << endl;
+			BuildPheromoneSumGraph(pheromoneSumGraph);
+		}
+		else
+		{
+			cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, (400 * (i + 1)), M, FirstSP, eliteGen) << endl;
+			BuildPheromoneSumGraph(pheromoneSumGraph);
+		}
+	}
+	cout << endl;
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, (9 * (i + 1)), FirstSP, eliteGen) << endl;
+		BuildPheromoneSumGraph(pheromoneSumGraph);
+	}
+
+	cout << endl;
+
+	/*int tempAlpha = 1;
 
 	while (true)
 	{
@@ -200,9 +249,7 @@ void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double
 	if (tempMin < min)
 	{
 		min = tempMin;
-	}
-
-	cout << min;
+	}*/
 }
 
 double TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300], int alpha, int beta, double ro, double LMin, int m, int FirstSp, int EliteGen)

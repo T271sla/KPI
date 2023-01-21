@@ -1,7 +1,0 @@
-﻿  TSP.cpp
-D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(116,12): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(118,12): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(125,27): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(131,27): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-D:\Projects\PA'Lab4\PA'Lab4\TSP.cpp(271,25): warning C4553: "==": результат выражения не используется; вы хотели использовать "="?
-  PA'Lab4.vcxproj -> D:\Projects\PA'Lab4\x64\Debug\PA'Lab4.exe

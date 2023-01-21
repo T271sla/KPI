@@ -83,8 +83,12 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 
 				Ants.at(i).ChooseDestination(Probabilities);
 
-				pheromoneSumGraph[Ants.at(i).Path.at(Ants.at(i).Path.size() - 2)][Ants.at(i).Path.at(Ants.at(i).Path.size() - 1)] += Lmin / Ants.at(i).getL(graph);
 				count++;
+			}
+			Ants.at(i).Path.push_back(Ants.at(i).StartingPoint);
+			for (int m = 0; m < Ants.at(i).Path.size() - 1; m++)
+			{
+				pheromoneSumGraph[Ants.at(i).Path.at(m)][Ants.at(i).Path.at(m + 1)] += Lmin / Ants.at(i).getL(graph);
 			}
 		}
 
@@ -102,12 +106,17 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 			}
 		}
 
+		BuildPheromoneSumGraph(pheromoneSumGraph);
+
 		iteration++;
 
-		/*if ((iteration + 1) % 20 == 0)
+		if ((iteration + 1) % 20 == 0)
 		{
 			int minIdx = 0;
 			int min = Ants.at(0).getL(graph);
+			int maxIdx = 0;
+			int max = Ants.at(0).getL(graph);
+			double SumL = 0;
 
 			for (int i = 1; i < Ants.size(); i++)
 			{
@@ -116,36 +125,16 @@ void TSPAlgorithm(int graph[200][200], double pheromoneGraph[200][200], double p
 					min = Ants.at(i).getL(graph);
 					minIdx = i;
 				}
-			}
-			cout << "Path L: " << Ants.at(minIdx).getL(graph) << endl;
-		}*/
 
-		/*if ((iteration + 1) % 20 == 0)
-		{
-			int maxIdx = 0;
-			int max = Ants.at(0).getL(graph);
-
-			for (int i = 1; i < Ants.size(); i++)
-			{
 				if (Ants.at(i).getL(graph) > max)
 				{
 					max = Ants.at(i).getL(graph);
 					maxIdx = i;
 				}
-			}
-			cout << "Path L: " << Ants.at(maxIdx).getL(graph) << endl;
-		}*/
 
-		if (iteration % 20 == 0)
-		{
-			double SumL = 0;
-
-			for (int i = 1; i < Ants.size(); i++)
-			{
 				SumL += Ants.at(i).getL(graph);
 			}
-
-			cout << SumL/Ants.size() << endl;
+			cout << Ants.at(minIdx).getL(graph) << " " << Ants.at(maxIdx).getL(graph) << " " << (SumL / Ants.size()) << endl;
 		}
 	}
 }

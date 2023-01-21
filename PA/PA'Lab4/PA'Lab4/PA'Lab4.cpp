@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+    srand(time(NULL));
 
     int graph[200][200];
     double pheromoneGraph[200][200];
@@ -33,6 +34,8 @@ int main()
         }
         cout << endl;
     }
+
+    cout << endl;
 
     TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph);
 }
@@ -67,8 +70,7 @@ void BuildPheromoneGraph(double pheromoneGraph[200][200])
             }
             else
             {
-                pheromoneGraph[i][j] = rand() % 9 + 1;
-                pheromoneGraph[i][j] = pheromoneGraph[i][j] / 10;
+                pheromoneGraph[i][j] = 0.1;
             }
         }
     }
@@ -81,17 +83,6 @@ void BuildPheromoneSumGraph(double pheromoneSumGraph[200][200])
         for (int j = 0; j < 200; j++)
         {
             pheromoneSumGraph[i][j] = 0;
-        }
-    }
-}
-
-void BuildVisibilityGraph(double visibilityGraph[200][200], int graph[200][200])
-{
-    for (int i = 0; i < 200; i++)
-    {
-        for (int j = 0; j < 200; j++)
-        {
-            visibilityGraph[i][j] = 1 / graph[i][j];
         }
     }
 }

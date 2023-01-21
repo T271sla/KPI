@@ -103,14 +103,3 @@ void BuildPheromoneSumGraph(double pheromoneSumGraph[300][300])
     }
 }
 
-void BuildVisibilityGraph(double visibilityGraph[300][300], int graph[300][300])
-{
-    for (int i = 0; i < 300; i++)
-    {
-        for (int j = 0; j < 300; j++)
-        {
-            visibilityGraph[i][j] = 1 / graph[i][j];
-        }
-    }
-}
-

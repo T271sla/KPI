@@ -12,7 +12,6 @@ struct Probability
 void BuildGraph(int graph[300][300]);
 void BuildPheromoneGraph(double pheromoneGraph[300][300]);
 void BuildPheromoneSumGraph(double pheromoneSumGraph[300][300]);
-void BuildVisibilityGraph(double visibilityGraph[300][300], int graph[300][300]);
 void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300]);
 double TSPAlgorithm(int graph[300][300], double pheromoneGraph[300][300], double pheromoneSumGraph[300][300], int alpha, int beta, double ro, double LMin, int m, int FirstSp, int EliteGen);
 int GenerateStartingPoint(int UsedStartingPoints[], int M);

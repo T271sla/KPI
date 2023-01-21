@@ -5,7 +5,6 @@ using namespace std;
 
 int main()
 {
-    srand(time(NULL));
 
     int graph[300][300];
     auto pheromoneGraph = new double[300][300];

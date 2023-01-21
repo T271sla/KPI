@@ -31,7 +31,7 @@ void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double
 
 	int count = 0;
 
-	/*
+	
 	cout << "Enter Alpha: ";
 	cin >> Alpha;
 	cout << "Enter Beta: ";
@@ -42,12 +42,12 @@ void TSPFindOptimal(int graph[300][300], double pheromoneGraph[300][300], double
 	cin >> Lmin;
 	cout << "Enter number of Ants: ";
 	cin >> M;
-	//cout << "Enter starting point for the first Ant: ";
-	//cin >> FirstSP;
-	//cout << "Will first Ant be elite? ";
-	//cin >> eliteGen;
+	cout << "Enter starting point for the first Ant: ";
+	cin >> FirstSP;
+	cout << "Will first Ant be elite? ";
+	cin >> eliteGen;
 
-	cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen) << endl;*/
+	cout << TSPAlgorithm(graph, pheromoneGraph, pheromoneSumGraph, Alpha, Beta, Ro, Lmin, M, FirstSP, eliteGen) << endl;
 
 	auto arrAlpha = new double[10];
 

@@ -11,13 +11,15 @@ void FindLDFS();
 void Astar(State parent);
 void CheckF2();
 void LDFS(State parent);
-void Algorithm(State state, int row, int maxIteration, int& currIteration, int& check);
+void Algorithm(State state, int row, int maxIteration, int& currIteration, int& iterations, int& check, int& deadEnds);
 
 int main()
 {
 	srand(time(NULL));
 
-	FindLDFS();
+	//FindLDFS();
+
+	FindAstar();
 
     return 0;
 }
@@ -32,11 +34,18 @@ void CheckF2()
 void FindLDFS()
 {
 	State parent;
-	parent.makeState();
+	parent.randomState();
 
 	cout << "First step:" << endl;
 
 	parent.print();
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << parent.GetQueenPosition(i) << " ";
+	}
+
+	cout << endl;
 
 	long int start = clock();
 	LDFS(parent);
@@ -53,6 +62,13 @@ void FindAstar()
 	cout << "First step:" << endl;
 
 	parent.print();
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << parent.GetQueenPosition(i) << " ";
+	}
+
+	cout << endl;
 
 	cout << "Searching for solution..." << endl;
 
@@ -71,6 +87,8 @@ void Astar(State parent)
 	int g = 0;
 	int h;
 	int f;
+	int iterations = 1;
+	int states = 1;
 
 	open.push(parent, 0);
 
@@ -81,8 +99,10 @@ void Astar(State parent)
 
 		if (current.F2() == 0)
 		{
-			cout << "Solution is found!" << std::endl;
+			cout << "Solution is found!" << endl;
 			current.print();
+			cout << "Iterations: " << iterations << endl;
+			cout << "States: " << states << endl;
 			break;
 		}
 
@@ -91,6 +111,7 @@ void Astar(State parent)
 			for (int j = 0; j < 8; j++)
 			{
 				State child = current;
+				states++;
 				if (j != child.GetQueenPosition(i))
 				{
 					child.moveQueen(i, j);
@@ -105,20 +126,24 @@ void Astar(State parent)
 		}
 
 		closed.insert(current);
+
+		iterations++;
 	}
 }
 
 void LDFS(State parent)
 {
-	long long int maxDepth = 0;
+	int maxDepth = 0;
 	int check = 0;
 	int currIDepth = 1;
-	cout << "Enter max iteration: ";
+	int iterations = 0;
+	int deadEnds = 0;
+	cout << "Enter max depth: ";
 	cin >> maxDepth;
-	Algorithm(parent, 1, maxDepth, currIDepth, check);
+	Algorithm(parent, 1, maxDepth, currIDepth, iterations, check, deadEnds);
 }
 
-void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& check)
+void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterations, int& check, int& deadEnds)
 {
 	if (check == 1)
 	{
@@ -127,6 +152,7 @@ void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& check)
 
 	if (currIDepth + 1 > maxDepth)
 	{
+		deadEnds++;
 		return;
 	}
 
@@ -139,13 +165,20 @@ void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& check)
 				check = 1;
 				cout << "Solution is found!" << endl;
 				state.print();
-				cout << "Iterations: " << currIDepth << endl;
+				cout << "Depth: " << currIDepth << endl;
+				cout << "Iterations: " << iterations << endl;
+				cout << "Dead-ends: " << deadEnds << endl;
 				return;
 			}
 			state.moveQueen(row, i);
+			iterations++;
 			currIDepth++;
-			Algorithm(state, row + 1, maxDepth, currIDepth, check);
+			Algorithm(state, row + 1, maxDepth, currIDepth, iterations, check, deadEnds);
 			currIDepth -= 1;
 		}
+	}
+	else
+	{
+		deadEnds++;
 	}
 }

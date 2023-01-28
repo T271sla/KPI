@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <vector>
+#include <stack>
 #include "Queue.h"
 #include "Set.h"
 #include "State.h"
@@ -10,7 +11,7 @@ void FindLDFS();
 void Astar(State parent);
 void CheckF2();
 void LDFS(State parent, int maxDepth);
-void Algorithm(State state, int row, int maxIteration, int& currIteration, int& iterations, int& check, int& deadEnds, vector<State> states);
+void Algorithm(State state, int row, int maxIteration, int& currIteration, int& iterations, int& check, int& deadEnds);
 
 int main()
 {
@@ -63,19 +64,28 @@ void LDFS(State parent, int maxDepth)
 	int currIDepth = 1;
 	int iterations = 0;
 	int deadEnds = 0;
-	vector<State> states;
-	states.push_back(parent);
-	Algorithm(parent, 1, maxDepth, currIDepth, iterations, check, deadEnds, states);
+
+	if (parent.CheckSolution())
+	{
+		cout << "Solution is found!" << endl;
+		parent.print();
+		cout << "Depth: " << currIDepth - 1 << endl;
+		cout << "Iterations: " << iterations << endl;
+		cout << "Dead-ends: " << deadEnds << endl;
+		return;
+	}
+
+	Algorithm(parent, 1, maxDepth, currIDepth, iterations, check, deadEnds);
 }
 
-void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterations, int& check, int& deadEnds, vector<State> states)
+void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterations, int& check, int& deadEnds)
 {
 	if (check == 1)
 	{
 		return;
 	}
 
-	if (currIDepth + 1 > maxDepth)
+	if (currIDepth > maxDepth)
 	{
 		deadEnds++;
 		return;
@@ -85,24 +95,22 @@ void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterati
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (states.back().CheckSolution())
+			State child;
+			child = state;
+			child.moveQueen(row, i);
+			if (child.CheckSolution())
 			{
 				check = 1;
 				cout << "Solution is found!" << endl;
-				states.at(states.size() - 1).print();
+				child.print();
 				cout << "Depth: " << currIDepth << endl;
-				cout << "Iterations: " << iterations + 1 << endl;
+				cout << "Iterations: " << iterations << endl;
 				cout << "Dead-ends: " << deadEnds << endl;
 				return;
 			}
-			State child;
-			child = states.at(states.size() - 1);
-			child.moveQueen(row, i);
-			states.push_back(child);
 			iterations++;
 			currIDepth++;
-			Algorithm(states.back(), row + 1, maxDepth, currIDepth, iterations, check, deadEnds, states);
-			states.pop_back();
+			Algorithm(child, row + 1, maxDepth, currIDepth, iterations, check, deadEnds);
 			currIDepth -= 1;
 		}
 	}

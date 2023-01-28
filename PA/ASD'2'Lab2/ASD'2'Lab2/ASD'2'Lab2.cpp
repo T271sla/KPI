@@ -3,23 +3,22 @@
 #include "Queue.h"
 #include "Set.h"
 #include "State.h"
-#include "Open.h"
 using namespace std;
 
 void FindAstar();
 void FindLDFS();
 void Astar(State parent);
 void CheckF2();
-void LDFS(State parent);
-void Algorithm(State state, int row, int maxIteration, int& currIteration, int& iterations, int& check, int& deadEnds);
+void LDFS(State parent, int maxDepth);
+void Algorithm(State state, int row, int maxIteration, int& currIteration, int& iterations, int& check, int& deadEnds, vector<State> states);
 
 int main()
 {
 	srand(time(NULL));
 
-	//FindLDFS();
+	FindLDFS();
 
-	FindAstar();
+	//FindAstar();
 
     return 0;
 }
@@ -47,11 +46,70 @@ void FindLDFS()
 
 	cout << endl;
 
+	int maxDepth;
+	cout << "Enter max depth: ";
+	cin >> maxDepth;
+
 	long int start = clock();
-	LDFS(parent);
+	LDFS(parent, maxDepth);
 	long int end = clock();
 
 	cout << "LDFS time - " << end - start << "ms" << endl;
+}
+
+void LDFS(State parent, int maxDepth)
+{
+	int check = 0;
+	int currIDepth = 1;
+	int iterations = 0;
+	int deadEnds = 0;
+	vector<State> states;
+	states.push_back(parent);
+	Algorithm(parent, 1, maxDepth, currIDepth, iterations, check, deadEnds, states);
+}
+
+void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterations, int& check, int& deadEnds, vector<State> states)
+{
+	if (check == 1)
+	{
+		return;
+	}
+
+	if (currIDepth + 1 > maxDepth)
+	{
+		deadEnds++;
+		return;
+	}
+
+	if (row < 8)
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if (states.back().CheckSolution())
+			{
+				check = 1;
+				cout << "Solution is found!" << endl;
+				states.at(states.size() - 1).print();
+				cout << "Depth: " << currIDepth << endl;
+				cout << "Iterations: " << iterations + 1 << endl;
+				cout << "Dead-ends: " << deadEnds << endl;
+				return;
+			}
+			State child;
+			child = states.at(states.size() - 1);
+			child.moveQueen(row, i);
+			states.push_back(child);
+			iterations++;
+			currIDepth++;
+			Algorithm(states.back(), row + 1, maxDepth, currIDepth, iterations, check, deadEnds, states);
+			states.pop_back();
+			currIDepth -= 1;
+		}
+	}
+	else
+	{
+		deadEnds++;
+	}
 }
 
 void FindAstar()
@@ -128,57 +186,5 @@ void Astar(State parent)
 		closed.insert(current);
 
 		iterations++;
-	}
-}
-
-void LDFS(State parent)
-{
-	int maxDepth = 0;
-	int check = 0;
-	int currIDepth = 1;
-	int iterations = 0;
-	int deadEnds = 0;
-	cout << "Enter max depth: ";
-	cin >> maxDepth;
-	Algorithm(parent, 1, maxDepth, currIDepth, iterations, check, deadEnds);
-}
-
-void Algorithm(State state, int row, int maxDepth, int& currIDepth, int& iterations, int& check, int& deadEnds)
-{
-	if (check == 1)
-	{
-		return;
-	}
-
-	if (currIDepth + 1 > maxDepth)
-	{
-		deadEnds++;
-		return;
-	}
-
-	if (row < 8)
-	{
-		for (int i = 0; i < 8; i++)
-		{
-			if (state.CheckSolution())
-			{
-				check = 1;
-				cout << "Solution is found!" << endl;
-				state.print();
-				cout << "Depth: " << currIDepth << endl;
-				cout << "Iterations: " << iterations << endl;
-				cout << "Dead-ends: " << deadEnds << endl;
-				return;
-			}
-			state.moveQueen(row, i);
-			iterations++;
-			currIDepth++;
-			Algorithm(state, row + 1, maxDepth, currIDepth, iterations, check, deadEnds);
-			currIDepth -= 1;
-		}
-	}
-	else
-	{
-		deadEnds++;
 	}
 }

@@ -1,6 +1,4 @@
 ﻿#include <iostream>
-#include <vector>
-#include <stack>
 #include "Queue.h"
 #include "Set.h"
 #include "State.h"
